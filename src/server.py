@@ -1,15 +1,15 @@
 import socket
-from consts import number_of_clients
+
+from consts import *
 
 # AF_INET6 : ipv6 , SOCK_STREAM : TCP , SOCK_DGRAM : UDP
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-ip_port = ('localhost', 8500)
+server_socket.bind(ip_port)
 
-server.bind(ip_port)
+server_socket.listen(number_of_clients)
 
-server.listen(number_of_clients)
+connection, address = server_socket.accept()
 
-connection, address = server.accept()
-
-connection.send('[SERVER] hello there')
+s = '[SERVER] Hello there'
+connection.send(s.encode())
